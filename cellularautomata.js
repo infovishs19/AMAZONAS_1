@@ -1,5 +1,6 @@
 class CellularAutomata {
-    constructor(label, gridWidth, gridHeight, limit, col, colorger, colornot) {
+    //constructor(label, gridWidth, gridHeight, limit, col, colorger, colornot) {
+    constructor(label, pixelWidth, pixelHeight, cellSize, limit, col, colorger, colornot) {
         //the name of the CellularAutomata, e.g. the Region in the Amazonas
         this.label = label;
         this.limit = limit;
@@ -7,9 +8,17 @@ class CellularAutomata {
         this.colorGer = colorger;
         this.colornot = colornot;
 
+        this.pixelWidth = pixelWidth;
+        this.pixelHeight = pixelHeight;
+      
+        this.rectWidth = cellSize;
+        this.rectHeight = cellSize;
+
         //number of cells in the x and y direction
-        this.gridWidth = gridWidth;
-        this.gridHeight = gridHeight;
+        // this.gridWidth = gridWidth;
+        // this.gridHeight = gridHeight;
+        this.gridWidth = floor(this.pixelWidth/this.rectWidth);
+        this.gridHeight = floor(this.pixelHeight/this.rectHeight);
 
         //a two dimensional array to hold the states of all cells
         this.grid = this.create2DArray(this.gridWidth, this.gridHeight);
@@ -17,15 +26,19 @@ class CellularAutomata {
         //a grid representing the next generation
         this.newGrid = [];
 
-        //calculate the width and height of rectangles based on the canvas width and height
-        this.rectWidth = width / gridWidth;
-        this.rectHeight = height / gridHeight;
+
         
         console.log(this.grid);
     }
 
     //draw the cellular automata
     draw() {
+
+        //draw a rectangle to see bounds of CellularAutomata
+        noFill();
+        stroke('red');
+        rect(0,0,this.pixelWidth,this.pixelHeight);
+        
         for (let i = 0; i < this.gridWidth; i++) {
             for (let j = 0; j < this.gridHeight; j++) {
                 let x = i * this.rectWidth;
