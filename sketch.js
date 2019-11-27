@@ -34,7 +34,7 @@ function setup() {
     var mattogrossoX = 400;
     var mattogrossoY = 0;
     mattogrosso = new CellularAutomata("Matto Grosso", mattogrossoX, mattogrossoY, mattogrossoWidthPixels, height, cellSizePixels, 3293, 'grey', 'red');
-    
+
     // para = new CellularAutomata("Para", 760, 108, 4057, 'grey','red');
     // maranhao = new CellularAutomata("Maranhao", 760, 108, 1419, 'grey','red');
 
@@ -64,7 +64,7 @@ function draw() {
 function mousePressed() {
 
     //each mouse click activates another region
-    for(var i =0; i<regions.length; i++){
+    for (var i = 0; i < regions.length; i++) {
         regions[i].mousePressed(mouseX, mouseY);
     }
 
