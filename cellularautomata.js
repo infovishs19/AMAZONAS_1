@@ -1,7 +1,9 @@
 class CellularAutomata {
     //constructor(label, gridWidth, gridHeight, limit, col, colorger, colornot) {
-    constructor(label, pixelWidth, pixelHeight, cellSize, limit, col, colorger, colornot) {
+    constructor(label, x,y,pixelWidth, pixelHeight, cellSize, limit, col, colorger, colornot) {
         //the name of the CellularAutomata, e.g. the Region in the Amazonas
+        this.x = x;
+        this.y = y;
         this.label = label;
         this.limit = limit;
         this.color = col;
@@ -34,11 +36,14 @@ class CellularAutomata {
     //draw the cellular automata
     draw() {
 
+        push();
+        translate(this.x,this.y);
+
         //draw a rectangle to see bounds of CellularAutomata
         noFill();
         stroke('red');
         rect(0,0,this.pixelWidth,this.pixelHeight);
-        
+
         for (let i = 0; i < this.gridWidth; i++) {
             for (let j = 0; j < this.gridHeight; j++) {
                 let x = i * this.rectWidth;
@@ -64,6 +69,7 @@ class CellularAutomata {
                
             }
         }
+        pop();
 
     }
 
@@ -155,9 +161,21 @@ class CellularAutomata {
     
 
     mousePressed(mx,my){
-        console.log('mouse pressed in ' +  this.label);
-        let xindex = floor(mx / this.rectWidth);
-        let yindex = floor(my / this.rectHeight);
+        if(mx < this.x || mx > (this.x + this.pixelWidth) || my<this.y || my > (this.y + this.pixelHeight)){
+            console.log(this.label + ' mouse pressed: out of bounds ');
+            return;
+        }
+        console.log(this.label + ' mouse captured' );
+        let localX = mx - this.x;
+        let localY = my - this.y;
+        let xindex = floor(localX / this.rectWidth);
+        let yindex = floor(localY / this.rectHeight);
+
+        console.log('mx,my',mx,my);
+        console.log('this.x,this.y',this.x,this.y);
+        console.log('localX,localY',localX,localY);
+        console.log('xindex,yindex',xindex,yindex);
+
     
         console.log(xindex, yindex);
         this.grid[xindex][yindex] = 1;
